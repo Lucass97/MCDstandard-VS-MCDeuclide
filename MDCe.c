@@ -8,17 +8,17 @@ int Euc(int x, int y);
 
 int main(){
   /* Dichiarazione Variabili */
-  int = a;
-  int = b;
+  int a = 0;
+  int b = 0;
   
   /* Introduzione */
-  printf("Inserire a");
+  printf("Inserire a ----> ");
   scanf( "%d",&a );
-  printf("Inserire b");
+  printf("Inserire b ----> ");
   scanf( "%d",&b );
   
   /* Svolgimento */
-  printf("MCD tra a =%d e b =%d è%d", a, b, Euc(a,b));
+  printf("\nMCD tra a = %d e b = %d e' %d", a, b, Euc(a,b));
   
   return 0;
 
@@ -28,20 +28,21 @@ int main(){
 
 int Euc (int x, int y){
   /* Dichiarazione Variabili */
-  int x;
-  int y;
+  int q = 1;
+  int r = 1;
+  int mcd = 1;
   
   /* Svolgimento */
-  x = a;
-  y = b;
-  
+    printf("\nElaborazione...\n");
    while (y != 0){
-  /*1  x = y;
-  
-  *  y = x % y;
-  */  
+     mcd = y;
+     q = x / y;
+     r = x % y;
+     printf("%d = %d * %d + %d\n",x,y,q,r);
+     x = y;
+     y = r;
   }
    
-   return x;
+   return mcd;
    
 }
