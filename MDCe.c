@@ -5,6 +5,7 @@
 #include<stdio.h>
 
 int Euc(int x, int y);
+int standard (int x,int y);
 
 int main(){
   /* Dichiarazione Variabili */
@@ -18,24 +19,26 @@ int main(){
   scanf( "%d",&b );
   
   /* Svolgimento */
-  printf("\nMCD tra a = %d e b = %d e' %d", a, b, Euc(a,b));
+  printf("\nMCD di Euclide tra a = %d e b = %d e' %d\n", a, b, Euc(a,b));
+  
+  printf("MCD normale tra a = %d e b = %d e' %d\n",a ,b ,standard(a,b));
   
   return 0;
 
 }
 
-/*----------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------*/
 
 int Euc (int x, int y){
   /* Dichiarazione Variabili */
   int q = 1;
   int r = 1;
-  int mcd = 1;
+  int mcde = 1;
   
   /* Svolgimento */
     printf("\nElaborazione...\n");
    while (y != 0){
-     mcd = y;
+     mcde = y;
      q = x / y;
      r = x % y;
      printf("%d = %d * %d + %d\n",x,y,q,r);
@@ -43,6 +46,23 @@ int Euc (int x, int y){
      y = r;
   }
    
-   return mcd;
+   return mcde;
    
+}
+
+/*--------------------------------------------------------------------*/
+
+int standard (int x,int y){
+	/* Dichiarazione Variabili */
+	int mcds = 1;
+	int counter = 1;
+	
+	while(counter >= x){
+		if ((x % counter) == 0 && (y % counter)){
+				mcds = counter;
+				counter++;
+		}
+	}
+	
+	return mcds;
 }
