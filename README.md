@@ -1,4 +1,4 @@
-# MCDstandard-VS-MCEuclide
+# MCDstandard-VS-MCDeuclide
 ----------------------------ITALIANO-----------------------------------
 Questo è un file sorgente creato per cronometrare la
 velocita con cui una macchina (un calcolatore qualsiasi)
