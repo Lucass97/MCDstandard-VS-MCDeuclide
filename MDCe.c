@@ -73,12 +73,21 @@ int standard (int x,int y){
 	int mcds = 1;
 	int counters =1;
 	
-	while(counters >= x){
-		if ((x % counters) == 0 && (y % counters)){
-				mcds = counters;
-				counters++;
+	printf("Elaborazione...\n");
+
+	while(counters <= y){
+		printf("proviamo con %d\n",counters );
+		if (((x % counters) == 0) && ((y % counters) == 0)){
+			printf("%d > %d\n",counters ,mcds );
+			mcds = counters;
+			printf("(a / %d) e (b / %d) MCD(a,b) = %d\n",counters ,counters ,counters);
 		}
+		
+		counters++;
+		
 	}
+	printf("\n");
 	
 	return mcds;
+	
 }
