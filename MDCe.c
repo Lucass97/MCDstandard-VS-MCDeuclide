@@ -52,6 +52,11 @@ int Euc (int x, int y){
   int mcde = 1;
   
   /* Svolgimento */
+  
+  if ((x == 0) || (y == 0)){
+	 mcde = 0;
+  }
+  else{
     printf("\nElaborazione...\n");
    while (y != 0){
      mcde = y;
@@ -60,8 +65,8 @@ int Euc (int x, int y){
      printf("%d = %d * %d + %d\n",x,y,q,r);
      x = y;
      y = r;
+     }
   }
-   
    return mcde;
    
 }
@@ -75,6 +80,10 @@ int standard (int x,int y){
 	
 	printf("Elaborazione...\n");
 
+	if ((x == 0) || (y == 0)){
+	 mcds = 0;
+    }
+    else{
 	while(counters <= y){
 		printf("proviamo con %d\n",counters );
 		if (((x % counters) == 0) && ((y % counters) == 0)){
@@ -85,6 +94,7 @@ int standard (int x,int y){
 		
 		counters++;
 		
+	  }
 	}
 	printf("\n");
 	
