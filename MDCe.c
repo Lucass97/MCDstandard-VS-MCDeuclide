@@ -23,7 +23,11 @@ int main(){
   scanf( "%d",&b );
   
   /* Svolgimento */
-  if (b > a) {				//In caso b>a si scambiano
+  if ((a == 0) && (b == 0)){
+	   printf("a e b non possono essere 0!");
+	   return 0;
+  }
+  else if (b > a) {				//In caso b>a si scambiano
 	  tran = a;
 	  a = b;
 	  b = tran;
