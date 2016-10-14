@@ -11,6 +11,7 @@ int main(){
   /* Dichiarazione Variabili */
   int a = 0;
   int b = 0;
+  int tran = 0;
   
   /* Introduzione */
   printf("Inserire a ----> ");
@@ -19,9 +20,21 @@ int main(){
   scanf( "%d",&b );
   
   /* Svolgimento */
-  printf("\nMCD di Euclide tra a = %d e b = %d e' %d\n", a, b, Euc(a,b));
+  if (b > a) {				//In caso b>a si scambiano
+	  tran = a;
+	  a = b;
+	  b = tran;
+	  tran = 1;			//Counter viene utilizzata in standard()!
   
-  printf("MCD normale tra a = %d e b = %d e' %d\n",a ,b ,standard(a,b));
+  printf("\nMCD di Euclide tra b = %d e a = %d e' %d\n\n", a, b, Euc(a,b));
+  // quindi si scambiano anche i printf
+  printf("MCD normale tra b = %d e a = %d e' %d\n\n",a ,b ,standard(a,b));
+   
+  }else {// Nel caso normale(a>b) si prosegue normalmente
+  printf("\nMCD di Euclide tra a = %d e b = %d e' %d\n\n", a, b, Euc(a,b));
+  
+  printf("MCD normale tra a = %d e b = %d e' %d\n\n",a ,b ,standard(a,b));
+  }
   
   return 0;
 
@@ -55,12 +68,12 @@ int Euc (int x, int y){
 int standard (int x,int y){
 	/* Dichiarazione Variabili */
 	int mcds = 1;
-	int counter = 1;
+	int counters =1;
 	
-	while(counter >= x){
-		if ((x % counter) == 0 && (y % counter)){
-				mcds = counter;
-				counter++;
+	while(counters >= x){
+		if ((x % counters) == 0 && (y % counters)){
+				mcds = counters;
+				counters++;
 		}
 	}
 	
