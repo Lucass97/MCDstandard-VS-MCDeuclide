@@ -14,6 +14,9 @@ int main(){
   int tran = 0;
   
   /* Introduzione */
+  printf("Programma per verificare la velocita di calcolo tra MCD con metodo\n");
+  printf("tradizionale e con l' algoritmo di Euclide\n\n");
+    
   printf("Inserire a ----> ");
   scanf( "%d",&a );
   printf("Inserire b ----> ");
