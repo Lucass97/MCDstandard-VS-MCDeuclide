@@ -36,7 +36,9 @@ int main()
         }
          printf("\n");
         /* Svolgimento */
-        if(b > a) { // In caso b>a si scambiano
+        if(a==0 && b==0)
+            printf("\nMCD tra a = %d e b = %d non e' definito\n", a, b);
+        else if(b > a) { // In caso b>a si scambiano
             int tran = 0;
             tran = a;
             a = b;
@@ -66,7 +68,13 @@ int main()
             while(getchar() != '\n')
                 ;
         }
-        system("cls"); // Funzione che pulisce la console
+        //system("clear"); // Funzione che pulisce la console
+        #ifdef _WIN32
+            system("cls");
+        #else
+            // Assume POSIX
+            system ("clear");
+        #endif
     }
     return 0;
 }
