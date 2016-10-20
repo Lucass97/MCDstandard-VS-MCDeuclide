@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h> // Questa libreria permette di utilizzare il true
 #include <stdlib.h>
+#include <time.h> // Questa libreria permette di utilizzare la funzione per calcolare il tempo
 
 int Euc(int x, int y);
 int standard(int x, int y);
@@ -36,9 +37,7 @@ int main()
         }
          printf("\n");
         /* Svolgimento */
-        if(a==0 && b==0)
-            printf("\nMCD tra a = %d e b = %d non e' definito\n", a, b);
-        else if(b > a) { // In caso b>a si scambiano
+        if(b > a) { // In caso b>a si scambiano
             int tran = 0;
             tran = a;
             a = b;
@@ -68,13 +67,7 @@ int main()
             while(getchar() != '\n')
                 ;
         }
-        //system("clear"); // Funzione che pulisce la console
-        #ifdef _WIN32
-            system("cls");
-        #else
-            // Assume POSIX
-            system ("clear");
-        #endif
+        system("clear"); // Funzione che pulisce la console
     }
     return 0;
 }
@@ -84,15 +77,20 @@ int main()
 int Euc(int x, int y)
 {
     /* Dichiarazione Variabili */
-    int q = 1;
+    // int q = 1;
     int r = 1;
     int mcde = 0;
+    int q = 1;
+    clock_t time_euclide;
 
     /* Svolgimento */
     printf("|============================|\n");
     printf("| Calcolo con MCD di euclide |\n");
     printf("|============================|\n");
     printf("Elaborazione...\n");
+    
+    
+    time_euclide = clock(); //Tempo iniziale
     
     if(x == 0 && y == 0)
         return 0;
@@ -109,6 +107,8 @@ int Euc(int x, int y)
         x = y;
         y = r;
     }
+    time_euclide = clock() - time_euclide; // Tempo finale
+    printf("Tempo di esecuzione: %fs \n", (double)time_euclide/CLOCKS_PER_SEC);
     return mcde;
 }
 
@@ -119,12 +119,15 @@ int standard(int x, int y)
     /* Dichiarazione Variabili */
     int mcds = 0;
     int counters = 1;
+    clock_t time_standard;
 
     /* Svolgimento */
     printf("|============================|\n");
     printf("| Calcolo con MCD normale    |\n");
     printf("|============================|\n");
     printf("Elaborazione...\n");
+    
+    time_standard = clock(); //Tempo iniziale
     
     if(x == 0 && y == 0)
         return 0;
@@ -134,15 +137,17 @@ int standard(int x, int y)
         return x;
         
     while(counters <= y) {
-        printf("proviamo con %d\n", counters);
+    //    printf("proviamo con %d\n", counters);
         if(((x % counters) == 0) && ((y % counters) == 0)) {
-            printf("%d > %d\n", counters, mcds);
+        //    printf("%d > %d\n", counters, mcds);
             mcds = counters;
-            printf("(a / %d) e (b / %d) MCD(a,b) = %d\n", counters, counters, counters);
+        //    printf("(a / %d) e (b / %d) MCD(a,b) = %d\n", counters, counters, counters);
         }
 
         counters++;
     }
+    time_standard = clock() - time_standard; // Tempo finale
+    printf("Tempo di esecuzione: %fs \n", (double)time_standard/CLOCKS_PER_SEC);
     printf("\n");
     return mcds;
 }
