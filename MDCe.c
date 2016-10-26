@@ -7,8 +7,8 @@
 #include <stdlib.h>
 #include <time.h> // Questa libreria permette di utilizzare la funzione per calcolare il tempo
 
-int Euc(int x, int y);
-int standard(int x, int y);
+int Euc(int x, int y, bool mostraPassaggi);
+int standard(int x, int y, bool mostraPassaggi);
 
 int main()
 {
@@ -16,6 +16,8 @@ int main()
     int a = 0;
     int b = 0;
     char scelta;
+    bool mostraPassaggiMCDe;
+    bool mostraPassaggiMCDs;
 
     /* Introduzione */
     while(true) {
@@ -26,34 +28,70 @@ int main()
 
         /*Input controlato*/
         printf("Inserire a ----> ");
-        while(scanf("%d", &a) != 1) { // La funzione scanf restituirà un valore diverso da 1 quando non riceverà un numero
-            printf("Attenzione! Quello che hai inserito non e' un numero.\n\tRiprova ----> ");
-            while(getchar() != '\n'); // Funzione che pulisce il buffer di input
-        }
+        do{
+            while(scanf("%d", &a) != 1) { // La funzione scanf restituirà un valore diverso da 1 quando non riceverà un numero
+                printf("Attenzione! Quello che hai inserito non e' un numero.\n\tRiprova ----> ");
+                while(getchar() != '\n'); // Funzione che pulisce il buffer di input
+            }
+            if(a>0)
+                break;
+            printf("Attenzione! Attenzione il numero che hai inserito non e' valido.\n\tRiprova ----> ");
+        }while(true);
         printf("Inserire b ----> ");
-        while(scanf("%d", &b) != 1) { // La funzione scanf restituirà un valore diverso da 1 quando non riceverà un numero
-            printf("Attenzione! Quello che hai inserito non e' un numero.\n\tRiprova ----> ");
-            while(getchar() != '\n'); // Funzione che pulisce il buffer di input
+         do{
+            while(scanf("%d", &b) != 1) { // La funzione scanf restituirà un valore diverso da 1 quando non riceverà un numero
+                printf("Attenzione! Quello che hai inserito non e' un numero.\n\tRiprova ----> ");
+                while(getchar() != '\n'); // Funzione che pulisce il buffer di input
+            }
+            if(b>0)
+                break;
+            printf("Attenzione! Attenzione il numero che hai inserito non e' valido.\n\tRiprova ----> ");
+        }while(true);
+        
+        /* Robe */
+        while(getchar() != '\n'); // Funzione che pulisce il buffer di input
+        printf("Mostrare i passaggi per MCD di euclide? (y/n) ----> ");
+        while(scanf("%c", &scelta) == 1) {
+            if(scelta == 121) { // 121 corrisponde a y
+                printf("Hai scelto: si\n");
+                mostraPassaggiMCDe = true;
+                break;
+            } else if(scelta == 110) { // 110 corrisponde a n
+                printf("Hai scelto: no\n");
+                mostraPassaggiMCDe = false;
+                break;
+            }
+            printf("Attenzione! Risposta non valida.\n\tRiprova ----> ");
+            while(getchar() != '\n');
         }
+        
+        while(getchar() != '\n'); // Funzione che pulisce il buffer di input
+        printf("Mostrare i passaggi per MCD standard? (y/n) ----> ");
+        while(scanf("%c", &scelta) == 1) {
+            if(scelta == 121) { // 121 corrisponde a y
+                printf("Hai scelto: si\n");
+                mostraPassaggiMCDs = true;
+                break;
+            } else if(scelta == 110) { // 110 corrisponde a n
+                printf("Hai scelto: no\n");
+                mostraPassaggiMCDs = false;
+                break;
+            }
+            printf("Attenzione! Risposta non valida.\n\tRiprova ----> ");
+            while(getchar() != '\n');
+        }
+        
          printf("\n");
         /* Svolgimento */
-        if(b > a) { // In caso b>a si scambiano
-            int tran = 0;
-            tran = a;
-            a = b;
-            b = tran;
-            // Counter viene utilizzata in standard()!
-            printf("\nMCD di Euclide tra b = %d e a = %d e' %d\n\n", a, b, Euc(a, b));
-            // quindi si scambiano anche i printf
-            printf("MCD normale tra b = %d e a = %d e' %d\n\n", a, b, standard(a, b));
-
-        } else { // Nel caso normale(a>b) si prosegue normalmente
-            printf("\nMCD di Euclide tra a = %d e b = %d e' %d\n\n", a, b, Euc(a, b));
-            printf("MCD normale tra a = %d e b = %d e' %d\n\n", a, b, standard(a, b));
+        if(a==0 && b==0)
+            printf("\nMCD tra a = %d e b = %d non e' definito\n", a, b);
+        else
+        {
+            printf("\nMCD di Euclide tra a = %d e b = %d e' %d\n\n", a, b, Euc(a, b, mostraPassaggiMCDe));
+            printf("\nMCD normale tra a = %d e b = %d e' %d\n\n", a, b, standard(a, b,mostraPassaggiMCDs));
         }
 
-        while(getchar() != '\n')
-            ; // Funzione che pulisce il buffer di input
+        while(getchar() != '\n'); // Funzione che pulisce il buffer di input
         printf("Vuoi effetturare un altro calcolo? (y/n) ----> ");
         while(scanf("%c", &scelta) == 1) {
             if(scelta == 121) { // 121 corrisponde a y
@@ -64,23 +102,34 @@ int main()
                 return 0;
             }
             printf("Attenzione! Risposta non valida.\n\tRiprova ----> ");
-            while(getchar() != '\n')
-                ;
+            while(getchar() != '\n');
         }
-        system("clear"); // Funzione che pulisce la console
+        //system("clear"); // Funzione che pulisce la console
+        #ifdef _WIN32
+            system("cls");
+        #else
+            // Assume POSIX
+            system ("clear");
+        #endif
     }
     return 0;
 }
 
 /*--------------------------------------------------------------------*/
 
-int Euc(int x, int y)
+int Euc(int x, int y, bool mostraPassaggi)
 {
+    /* Scambio valori Variabili */
+    if(y>x){
+        int appo = x;
+        x = y;
+        y = appo;
+    }
+    
     /* Dichiarazione Variabili */
-    // int q = 1;
+    int q = 1;
     int r = 1;
     int mcde = 0;
-    int q = 1;
     clock_t time_euclide;
 
     /* Svolgimento */
@@ -88,7 +137,6 @@ int Euc(int x, int y)
     printf("| Calcolo con MCD di euclide |\n");
     printf("|============================|\n");
     printf("Elaborazione...\n");
-    
     
     time_euclide = clock(); //Tempo iniziale
     
@@ -103,23 +151,33 @@ int Euc(int x, int y)
         mcde = y;
         q = x / y;
         r = x % y;
-        printf("%d = %d * %d + %d\n", x, y, q, r);
+        if(mostraPassaggi)
+            printf("%d = %d * %d + %d\n", x, y, q, r);
         x = y;
         y = r;
     }
+    
     time_euclide = clock() - time_euclide; // Tempo finale
-    printf("Tempo di esecuzione: %fs \n", (double)time_euclide/CLOCKS_PER_SEC);
+    printf("\nTempo di esecuzione: %fs \n", (double)time_euclide/CLOCKS_PER_SEC);
+    
     return mcde;
 }
 
 /*--------------------------------------------------------------------*/
 
-int standard(int x, int y)
+int standard(int x, int y, bool mostraPassaggi)
 {
+     /* Scambio valori Variabili */
+    if(y>x){
+        int appo = x;
+        x = y;
+        y = appo;
+    }
+    
     /* Dichiarazione Variabili */
     int mcds = 0;
-    int counters = 1;
-    clock_t time_standard;
+    int counters = y;
+    clock_t time_euclide;
 
     /* Svolgimento */
     printf("|============================|\n");
@@ -127,7 +185,7 @@ int standard(int x, int y)
     printf("|============================|\n");
     printf("Elaborazione...\n");
     
-    time_standard = clock(); //Tempo iniziale
+    time_euclide = clock(); //Tempo iniziale
     
     if(x == 0 && y == 0)
         return 0;
@@ -136,18 +194,20 @@ int standard(int x, int y)
     else if(y == 0)
         return x;
         
-    while(counters <= y) {
-    //    printf("proviamo con %d\n", counters);
+    while(counters != 0) {
+        if(mostraPassaggi)
+            printf("proviamo con %d\n", counters);
         if(((x % counters) == 0) && ((y % counters) == 0)) {
-        //    printf("%d > %d\n", counters, mcds);
             mcds = counters;
-        //    printf("(a / %d) e (b / %d) MCD(a,b) = %d\n", counters, counters, counters);
+            if(mostraPassaggi)
+                printf("(a / %d) e (b / %d) MCD(a,b) = %d\n", counters, counters, counters);
+            break;
         }
-
-        counters++;
+        counters--;
     }
-    time_standard = clock() - time_standard; // Tempo finale
-    printf("Tempo di esecuzione: %fs \n", (double)time_standard/CLOCKS_PER_SEC);
-    printf("\n");
+    
+    time_euclide = clock() - time_euclide; // Tempo finale
+    printf("\nTempo di esecuzione: %fs \n", (double)time_euclide/CLOCKS_PER_SEC);
+    
     return mcds;
 }
